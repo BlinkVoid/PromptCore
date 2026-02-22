@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# uv
+.uv/
+uv.lock
+
+# Testing & coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+test_results.txt
+*_test.txt
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*.suo
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Project data (local SQLite DB and data dir)
+*.db
+data/
+
+# Local MCP config (contains absolute local paths - not portable)
+.mcp.json
