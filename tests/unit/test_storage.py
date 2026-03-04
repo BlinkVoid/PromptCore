@@ -1,5 +1,5 @@
 from datetime import datetime
-from promptsmith.persistence import ReasoningLogCreate, ReasoningLog
+from promptcore.persistence import ReasoningLogCreate, ReasoningLog
 
 class TestStorage:
     def test_create_log(self, in_memory_storage):

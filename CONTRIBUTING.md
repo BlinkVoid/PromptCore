@@ -1,14 +1,14 @@
-# Contributing to PromptSmith
+# Contributing to PromptCore
 
-Thank you for your interest in contributing to PromptSmith! We welcome contributions from the community to help make "Reasoning as a Service" better for everyone.
+Thank you for your interest in contributing to PromptCore! We welcome contributions from the community to help make "Reasoning as a Service" better for everyone.
 
 ## Getting Started
 
 1.  **Fork the repository** on GitHub.
 2.  **Clone your fork** locally:
     ```bash
-    git clone https://github.com/your-username/PromptSmith.git
-    cd PromptSmith
+    git clone https://github.com/your-username/PromptCore.git
+    cd PromptCore
     ```
 3.  **Create a virtual environment**:
     ```bash

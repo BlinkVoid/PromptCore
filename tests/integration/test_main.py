@@ -1,9 +1,9 @@
 import pytest
 from unittest.mock import MagicMock
-from promptsmith.main import recommend_strategy, generate_meta_prompt
-from promptsmith.domain.selector import TaskAnalysis, TaskCategory, ComplexityLevel
-from promptsmith.domain.builder import GeneratedPrompt
-from promptsmith.persistence import ReasoningLog
+from promptcore.main import recommend_strategy, generate_meta_prompt
+from promptcore.domain.selector import TaskAnalysis, TaskCategory, ComplexityLevel
+from promptcore.domain.builder import GeneratedPrompt
+from promptcore.persistence import ReasoningLog
 
 class TestMainIntegration:
     def test_recommend_strategy(self, override_deps):

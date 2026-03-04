@@ -1,6 +1,6 @@
 import pytest
 from pathlib import Path
-from promptsmith.utils.safe_files import SafeFileManager
+from promptcore.utils.safe_files import SafeFileManager
 
 class TestSafeFileManager:
     def test_sanitize_filename_removes_path_traversal(self):

@@ -5,8 +5,8 @@ import os
 # Add src to path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from promptsmith.domain import FrameworkSelector, list_frameworks, TaskCategory
-from promptsmith.domain.frameworks import FRAMEWORK_REGISTRY
+from promptcore.domain import FrameworkSelector, list_frameworks, TaskCategory
+from promptcore.domain.frameworks import FRAMEWORK_REGISTRY
 
 def verify_frameworks_count():
     print("Verifying Framework Count...")

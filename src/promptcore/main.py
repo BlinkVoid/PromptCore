@@ -1,4 +1,4 @@
-"""PromptSmith MCP Server - Reasoning as a Service.
+"""PromptCore MCP Server - Reasoning as a Service.
 
 Provides reasoning framework selection and meta-prompt generation
 for AI agents via Model Context Protocol.
@@ -9,14 +9,14 @@ from typing import Annotated, Optional
 
 from fastmcp import FastMCP, Context
 
-from promptsmith.config import settings
-from promptsmith.domain import (
+from promptcore.config import settings
+from promptcore.domain import (
     FrameworkSelector,
     PromptBuilder,
     list_frameworks,
 )
-from promptsmith.domain.frameworks import FRAMEWORK_REGISTRY
-from promptsmith.persistence import Storage, ReasoningLogCreate
+from promptcore.domain.frameworks import FRAMEWORK_REGISTRY
+from promptcore.persistence import Storage, ReasoningLogCreate
 
 
 # ============================================================================
@@ -52,7 +52,7 @@ async def lifespan(server: FastMCP):
     yield
 
 # Initialize MCP Server
-mcp = FastMCP("PromptSmith", lifespan=lifespan)
+mcp = FastMCP("PromptCore", lifespan=lifespan)
 
 
 # ============================================================================
@@ -189,7 +189,7 @@ def list_available_frameworks() -> dict:
 @mcp.tool()
 def get_usage_stats() -> dict:
     """
-    Get usage statistics for PromptSmith.
+    Get usage statistics for PromptCore.
 
     Shows total prompts generated, distribution by framework and category,
     and average complexity scores.

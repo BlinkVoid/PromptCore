@@ -1,5 +1,5 @@
 import pytest
-from promptsmith.domain.selector import FrameworkSelector, TaskCategory, ComplexityLevel, TaskAnalysis
+from promptcore.domain.selector import FrameworkSelector, TaskCategory, ComplexityLevel, TaskAnalysis
 
 @pytest.fixture
 def selector():

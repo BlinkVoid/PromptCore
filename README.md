@@ -1,10 +1,10 @@
-# PromptSmith
+# PromptCore
 
 **Reasoning as a Service** - A Capability-Level 0 MCP Server that provides intelligent reasoning framework selection and meta-prompt generation for AI agents.
 
 ## Purpose
 
-PromptSmith analyzes tasks, determines their complexity and category, and generates optimized "meta-prompts" using the most appropriate reasoning framework.
+PromptCore analyzes tasks, determines their complexity and category, and generates optimized "meta-prompts" using the most appropriate reasoning framework.
 
 ## Features
 
@@ -17,8 +17,8 @@ PromptSmith analyzes tasks, determines their complexity and category, and genera
 ## Installation
 
 ```bash
-git clone https://github.com/your-org/promptsmith
-cd promptsmith
+git clone https://github.com/your-org/promptcore
+cd promptcore
 uv sync
 ```
 
@@ -41,11 +41,11 @@ Add to your MCP client configuration (e.g. `.mcp.json` in your project root):
 ```json
 {
   "mcpServers": {
-    "promptsmith": {
+    "promptcore": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/promptsmith", "python", "-m", "promptsmith.main"],
+      "args": ["run", "--directory", "/path/to/promptcore", "python", "-m", "promptcore.main"],
       "env": {
-        "PYTHONPATH": "/path/to/promptsmith/src",
+        "PYTHONPATH": "/path/to/promptcore/src",
         "UV_LINK_MODE": "copy",
         "FASTMCP_SHOW_STARTUP_BANNER": "false"
       }
@@ -57,7 +57,7 @@ Add to your MCP client configuration (e.g. `.mcp.json` in your project root):
 ### Programmatic Usage
 
 ```python
-from promptsmith.domain import FrameworkSelector, PromptBuilder
+from promptcore.domain import FrameworkSelector, PromptBuilder
 
 # Analyze a task
 selector = FrameworkSelector()
@@ -123,7 +123,7 @@ print(result.meta_prompt)
 ## Architecture
 
 ```
-src/promptsmith/
+src/promptcore/
 ├── main.py              # MCP Server entry point
 ├── domain/
 │   ├── frameworks.py    # 40 reasoning framework implementations
@@ -138,10 +138,10 @@ src/promptsmith/
 
 ## Integration with Other Agents
 
-PromptSmith is designed to be called by other MCP-enabled agents.
+PromptCore is designed to be called by other MCP-enabled agents.
 
 ```python
-result = mcp_call("promptsmith", "generate_meta_prompt", {
+result = mcp_call("promptcore", "generate_meta_prompt", {
     "task": user_query,
     "context": relevant_context,
 })

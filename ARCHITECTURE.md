@@ -1,6 +1,6 @@
-# Architecture - PromptSmith
+# Architecture - PromptCore
 
-**PromptSmith** is designed as a standalone Capability-Level 0 MCP Server providing "Reasoning as a Service".
+**PromptCore** is designed as a standalone Capability-Level 0 MCP Server providing "Reasoning as a Service".
 
 ## Core Design
 
@@ -14,9 +14,9 @@ The system follows a clean architecture pattern with distinct layers:
 ## Directory Structure
 
 ```
-PromptSmith/
+PromptCore/
 ├── src/
-│   └── promptsmith/
+│   └── promptcore/
 │       ├── __init__.py
 │       ├── main.py              # MCP Server Entry
 │       ├── domain/              # Core Logic

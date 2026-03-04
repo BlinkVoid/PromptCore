@@ -9,7 +9,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 
 from .models import Base, ReasoningLogDB, ReasoningLog, ReasoningLogCreate
-from promptsmith.utils.safe_files import SafeFileManager
+from promptcore.utils.safe_files import SafeFileManager
 
 
 class Storage:

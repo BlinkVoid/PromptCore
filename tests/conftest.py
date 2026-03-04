@@ -9,8 +9,8 @@ import sys
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-from promptsmith.main import Dependencies, get_dependencies, mcp
-from promptsmith.persistence import Storage
+from promptcore.main import Dependencies, get_dependencies, mcp
+from promptcore.persistence import Storage
 
 @pytest.fixture
 def mock_deps():
@@ -24,7 +24,7 @@ def mock_deps():
 @pytest.fixture
 def override_deps(mock_deps):
     """Override the global dependency container for tests."""
-    from promptsmith import main
+    from promptcore import main
     original_deps = main._deps
     main._deps = mock_deps
     yield mock_deps

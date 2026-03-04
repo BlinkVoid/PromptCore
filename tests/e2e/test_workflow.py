@@ -1,9 +1,9 @@
 import pytest
 import datetime
 from unittest.mock import MagicMock
-from promptsmith.main import recommend_strategy, generate_meta_prompt
-from promptsmith.domain.selector import TaskAnalysis, TaskCategory, ComplexityLevel
-from promptsmith.domain.builder import GeneratedPrompt
+from promptcore.main import recommend_strategy, generate_meta_prompt
+from promptcore.domain.selector import TaskAnalysis, TaskCategory, ComplexityLevel
+from promptcore.domain.builder import GeneratedPrompt
 
 # In a real E2E test, we might use a separate process or the fastmcp test client.
 # Since fastmcp's test client details aren't fully exposed here, we will simulate
@@ -74,7 +74,7 @@ class TestWorkflowScenario:
         override_deps.storage.update_feedback.return_value = MagicMock(execution_feedback="Great prompt!")
         
         # We need to import this tool locally as it wasn't imported in top level
-        from promptsmith.main import log_execution_feedback
+        from promptcore.main import log_execution_feedback
         
         feedback_result = log_execution_feedback(
             task_id="task-uuid-1234",

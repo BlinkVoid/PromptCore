@@ -1,6 +1,6 @@
 import pytest
-from promptsmith.domain.builder import PromptBuilder
-from promptsmith.domain.selector import TaskAnalysis, TaskCategory, ComplexityLevel
+from promptcore.domain.builder import PromptBuilder
+from promptcore.domain.selector import TaskAnalysis, TaskCategory, ComplexityLevel
 
 @pytest.fixture
 def builder():
