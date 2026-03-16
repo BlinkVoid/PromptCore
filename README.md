@@ -276,8 +276,8 @@ PromptCore's category detection layer ensures that adversarial or ambiguous prom
 
 ```bash
 # 1. Clone
-git clone https://github.com/BlinkVoid/PromptSmith.git
-cd PromptSmith
+git clone https://github.com/BlinkVoid/PromptCore.git
+cd PromptCore
 
 # 2. Install dependencies
 uv sync
@@ -301,9 +301,9 @@ Add PromptCore to your MCP client. Works with Claude Code, Cline, Continue, Curs
   "mcpServers": {
     "promptcore": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/PromptSmith", "python", "-m", "promptcore.main"],
+      "args": ["run", "--directory", "/path/to/PromptCore", "python", "-m", "promptcore.main"],
       "env": {
-        "PYTHONPATH": "/path/to/PromptSmith/src",
+        "PYTHONPATH": "/path/to/PromptCore/src",
         "UV_LINK_MODE": "copy",
         "FASTMCP_SHOW_STARTUP_BANNER": "false"
       }
@@ -319,9 +319,9 @@ Add PromptCore to your MCP client. Works with Claude Code, Cline, Continue, Curs
   "mcpServers": {
     "promptcore": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/PromptSmith", "python", "-m", "promptcore.main"],
+      "args": ["run", "--directory", "/path/to/PromptCore", "python", "-m", "promptcore.main"],
       "env": {
-        "PYTHONPATH": "/path/to/PromptSmith/src"
+        "PYTHONPATH": "/path/to/PromptCore/src"
       }
     }
   }
