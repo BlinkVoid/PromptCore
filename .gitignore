@@ -42,3 +42,6 @@ data/
 
 # Local MCP config (contains absolute local paths - not portable)
 .mcp.json
+
+# Benchmark run artifacts
+benchmarks/results/
