@@ -20,7 +20,7 @@ PromptCore/
 │       ├── __init__.py
 │       ├── main.py              # MCP Server Entry
 │       ├── domain/              # Core Logic
-│       │   ├── frameworks.py    # Registry (ToT, CoT, Table, etc.)
+│       │   ├── frameworks/    # Registry (ToT, CoT, Table, etc.)
 │       │   ├── selector.py      # Heuristic/ML Selector
 │       │   └── builder.py       # Prompt Assembler
 │       ├── persistence/
@@ -37,18 +37,18 @@ PromptCore/
 
 ## Component Details
 
-### 1. Framework Registry (`domain/frameworks.py`)
+### 1. Framework Registry (`domain/frameworks/`)
 
 The registry manages the available reasoning strategies. Each framework implements a common interface for generating meta-prompts.
 
-**40 frameworks across 8 categories.** Each implements a common interface for generating meta-prompts. Examples include:
+**47 frameworks across 8 categories.** Each implements a common interface for generating meta-prompts. Examples include:
 -   **ChainOfThought**: Linear step-by-step reasoning (complexity ≥ 2.0)
 -   **ProgramOfThoughts**: Reasoning expressed as executable code (complexity ≥ 4.0)
 -   **TreeOfThoughts**: BFS/DFS exploration for creative and planning tasks (complexity ≥ 6.0)
 -   **ReAct**: Interleaved reasoning, action, and observation loop (complexity ≥ 7.0)
 -   **Reflexion**: Self-critique and refinement cycle (complexity ≥ 8.0)
 -   **GraphOfThoughts**: Graph-based reasoning with branching and backtracking (complexity ≥ 8.0)
--   ...and 34 more. See `domain/frameworks.py` for the full registry.
+-   ...and 41 more. See `domain/frameworks/` for the full registry.
 
 ### 2. Selector Logic (`domain/selector.py`)
 

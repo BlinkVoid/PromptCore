@@ -274,7 +274,7 @@ graph TB
 src/promptcore/
 ├── main.py              # MCP server entry point (FastMCP, stdio transport)
 ├── domain/
-│   ├── frameworks.py    # 47 reasoning framework implementations (frameworks/ package incl. modern.py)
+│   ├── frameworks/      # 47 reasoning framework implementations
 │   ├── selector.py      # Task analysis: category, complexity, intent, framework scoring
 │   └── builder.py       # Meta-prompt assembly from framework templates
 ├── persistence/
