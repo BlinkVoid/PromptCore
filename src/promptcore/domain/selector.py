@@ -51,11 +51,14 @@ class FrameworkSelector:
             "calculate", "compute", "equation", "formula", "solve", "math",
             "number", "sum", "product", "derivative", "integral", "probability",
             "statistics", "algebra", "geometry", "percentage", "ratio",
+            "shortest path", "weighted graph", "statistical", "significant",
+            "integer", "infinite series", "surface area", "celsius", "arranged",
         ],
         TaskCategory.LOGIC: [
             "prove", "deduce", "infer", "logic", "paradox", "contradiction",
             "valid", "invalid", "premise", "conclusion", "syllogism", "argument",
             "if and only if", "therefore", "implies", "boolean",
+            "deductive", "inductive", "negation", "flaw",
         ],
         TaskCategory.CREATIVE: [
             "write", "create", "imagine", "story", "poem", "design", "creative",
@@ -66,7 +69,7 @@ class FrameworkSelector:
             "data", "table", "csv", "json", "database", "query", "filter",
             "aggregate", "group by", "group", "join", "dataset", "rows", "columns",
             "analyze data", "spreadsheet", "records", "entries",
-            "revenue", "sales",
+            "revenue", "sales", "column", "anomalies", "features", "sensor",
         ],
         TaskCategory.RESEARCH: [
             "research", "investigate", "explore", "study", "survey", "review",

@@ -82,3 +82,17 @@ class TestScoringFixes:
     def test_trivial_fact_stays_lightweight(self, selector):
         analysis = selector.analyze("Who wrote 'Pride and Prejudice'?")
         assert analysis.complexity_score < 4.0
+
+
+class TestRegressionIteration1:
+    def test_regression_unit_conversion_is_math(self, selector):
+        """Grounded in benchmark miss: 'Convert 68°F to Celsius...' was predicted GENERAL."""
+        analysis = selector.analyze("Convert 68°F to Celsius and round to one decimal place.")
+        assert analysis.category == TaskCategory.MATH
+        assert analysis.recommended_framework == "chain_of_thought"
+
+    def test_regression_integer_pairs_is_math(self, selector):
+        """Grounded in benchmark miss: 'Find all integer pairs (x, y)...' was predicted GENERAL."""
+        analysis = selector.analyze("Find all integer pairs (x, y) with 3x + 4y = 41 and x, y > 0.")
+        assert analysis.category == TaskCategory.MATH
+        assert analysis.recommended_framework == "chain_of_thought"
