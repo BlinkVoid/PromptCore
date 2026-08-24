@@ -163,7 +163,7 @@ class FrameworkSelector:
             ComplexityLevel.HIGH: {"reasoning_via_planning", "graph_of_thoughts", "tree_of_thoughts", "buffer_of_thoughts"},
         },
     }
-    OUT_OF_TIER_PENALTY = 5.0
+    OUT_OF_TIER_PENALTY = 2.0
     INTENT_BONUS_CAP = 4.0
     
     def __init__(self):
