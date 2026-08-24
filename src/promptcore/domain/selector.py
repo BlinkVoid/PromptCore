@@ -129,38 +129,38 @@ class FrameworkSelector:
     CATEGORY_TIERS: dict[TaskCategory, dict[ComplexityLevel, set[str]]] = {
         TaskCategory.CODE: {
             ComplexityLevel.LOW: {"chain_of_thought"},
-            ComplexityLevel.MEDIUM: {"program_of_thoughts", "analogical", "self_ask", "self_refine", "contrastive_cot"},
-            ComplexityLevel.HIGH: {"plan_and_solve", "least_to_most", "reflexion", "faithful_cot", "recursion_of_thought"},
+            ComplexityLevel.MEDIUM: {"program_of_thoughts", "analogical", "self_ask", "self_refine", "contrastive_cot", "chain_of_draft"},
+            ComplexityLevel.HIGH: {"plan_and_solve", "least_to_most", "reflexion", "faithful_cot", "recursion_of_thought", "critic", "chain_of_code"},
         },
         TaskCategory.MATH: {
-            ComplexityLevel.LOW: {"chain_of_thought"},
+            ComplexityLevel.LOW: {"chain_of_thought", "chain_of_draft", "re2_re_reading"},
             ComplexityLevel.MEDIUM: {"program_of_thoughts", "chain_of_thought", "tab_cot", "self_consistency"},
-            ComplexityLevel.HIGH: {"least_to_most", "complexity_based", "cumulative_reasoning", "meta_cot", "reverse_cot"},
+            ComplexityLevel.HIGH: {"least_to_most", "complexity_based", "cumulative_reasoning", "meta_cot", "reverse_cot", "chain_of_code", "chain_of_abstraction"},
         },
         TaskCategory.LOGIC: {
-            ComplexityLevel.LOW: {"chain_of_thought", "prompt_paraphrasing"},
+            ComplexityLevel.LOW: {"chain_of_thought", "prompt_paraphrasing", "chain_of_draft", "re2_re_reading"},
             ComplexityLevel.MEDIUM: {"chain_of_thought", "sim_to_m", "step_back", "contrastive_cot", "system2_attention"},
-            ComplexityLevel.HIGH: {"maieutic", "meta_cot", "tree_of_thoughts", "cumulative_reasoning", "self_ask"},
+            ComplexityLevel.HIGH: {"maieutic", "meta_cot", "tree_of_thoughts", "cumulative_reasoning", "self_ask", "self_discover", "chain_of_code"},
         },
         TaskCategory.CREATIVE: {
             ComplexityLevel.LOW: {"role_prompting", "emotion_prompting"},
-            ComplexityLevel.MEDIUM: {"directional_stimulus", "analogical", "skeleton_of_thought", "role_prompting"},
-            ComplexityLevel.HIGH: {"tree_of_thoughts", "skeleton_of_thought", "self_refine"},
+            ComplexityLevel.MEDIUM: {"directional_stimulus", "analogical", "skeleton_of_thought", "role_prompting", "chain_of_draft", "deliberate_then_generate"},
+            ComplexityLevel.HIGH: {"tree_of_thoughts", "skeleton_of_thought", "self_refine", "deliberate_then_generate"},
         },
         TaskCategory.DATA: {
             ComplexityLevel.LOW: {"chain_of_table", "tab_cot"},
-            ComplexityLevel.MEDIUM: {"chain_of_table", "thread_of_thought", "program_of_thoughts", "tab_cot"},
-            ComplexityLevel.HIGH: {"react", "plan_and_solve", "chain_of_density", "contrastive_cot"},
+            ComplexityLevel.MEDIUM: {"chain_of_table", "thread_of_thought", "program_of_thoughts", "tab_cot", "chain_of_abstraction", "chain_of_code"},
+            ComplexityLevel.HIGH: {"react", "plan_and_solve", "chain_of_density", "contrastive_cot", "critic", "chain_of_code"},
         },
         TaskCategory.RESEARCH: {
             ComplexityLevel.LOW: {"rephrase_and_respond", "role_prompting"},
-            ComplexityLevel.MEDIUM: {"step_back", "self_ask", "chain_of_verification", "thread_of_thought", "chain_of_density"},
-            ComplexityLevel.HIGH: {"maieutic", "graph_of_thoughts", "step_back", "meta_cot", "active_prompting", "mixture_of_reasoning"},
+            ComplexityLevel.MEDIUM: {"step_back", "self_ask", "chain_of_verification", "thread_of_thought", "chain_of_density", "deliberate_then_generate", "chain_of_abstraction"},
+            ComplexityLevel.HIGH: {"maieutic", "graph_of_thoughts", "step_back", "meta_cot", "active_prompting", "mixture_of_reasoning", "critic", "self_discover"},
         },
         TaskCategory.PLANNING: {
             ComplexityLevel.LOW: {"skeleton_of_thought", "plan_and_solve"},
             ComplexityLevel.MEDIUM: {"plan_and_solve", "least_to_most", "tree_of_thoughts", "self_ask"},
-            ComplexityLevel.HIGH: {"reasoning_via_planning", "graph_of_thoughts", "tree_of_thoughts", "buffer_of_thoughts"},
+            ComplexityLevel.HIGH: {"reasoning_via_planning", "graph_of_thoughts", "tree_of_thoughts", "buffer_of_thoughts", "self_discover"},
         },
     }
     OUT_OF_TIER_PENALTY = 2.0

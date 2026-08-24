@@ -12,6 +12,7 @@ Submodules:
 - ensembling: SC, DENSE, MoRE, Meta-CoT, Paraphrasing
 - self_criticism: Reflexion, Maieutic, CoVe, Self-Refine, Self-Cal, RCoT, Cumulative
 - advanced: ReAct, GoT, RAP, CoD, BoT, CoTable
+- modern: Self-Discover, Chain of Draft, CRITIC, Chain of Code, RE2, CoA, DTG
 """
 
 # Base classes and registry
@@ -87,6 +88,17 @@ from .advanced import (
     ChainOfTable,
 )
 
+# Modern (2023–2026 wave)
+from .modern import (
+    SelfDiscover,
+    ChainOfDraft,
+    Critic,
+    ChainOfCode,
+    Re2ReReading,
+    ChainOfAbstraction,
+    DeliberateThenGenerate,
+)
+
 __all__ = [
     # Base
     "TaskCategory",
@@ -140,4 +152,12 @@ __all__ = [
     "ChainOfDensity",
     "BufferOfThoughts",
     "ChainOfTable",
+    # Modern
+    "SelfDiscover",
+    "ChainOfDraft",
+    "Critic",
+    "ChainOfCode",
+    "Re2ReReading",
+    "ChainOfAbstraction",
+    "DeliberateThenGenerate",
 ]

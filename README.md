@@ -7,10 +7,10 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 [![MCP Compatible](https://img.shields.io/badge/MCP-compatible-blue?style=flat-square)](https://modelcontextprotocol.io/)
-[![Frameworks](https://img.shields.io/badge/reasoning_frameworks-40-orange?style=flat-square)](#framework-catalog)
+[![Frameworks](https://img.shields.io/badge/reasoning_frameworks-47-orange?style=flat-square)](#framework-catalog)
 [![Tests](https://img.shields.io/badge/tests-22_passing-brightgreen?style=flat-square)](#)
 
-An MCP server that analyzes any task, selects the optimal reasoning framework from 40 peer-reviewed strategies, and generates a tailored meta-prompt -- ready to feed to any LLM. No LLM calls required for selection. Deterministic. Sub-millisecond.
+An MCP server that analyzes any task, selects the optimal reasoning framework from 47 peer-reviewed strategies, and generates a tailored meta-prompt -- ready to feed to any LLM. No LLM calls required for selection. Deterministic. Sub-millisecond.
 
 ---
 
@@ -18,7 +18,7 @@ An MCP server that analyzes any task, selects the optimal reasoning framework fr
 
 Most AI agents use Chain of Thought for everything. That's like using a hammer for every job.
 
-A code generation task needs a different reasoning strategy than a research synthesis task, which needs a different strategy than a logic puzzle. The academic literature describes over 40 distinct reasoning frameworks -- each optimized for specific task types and complexity levels. But no developer has time to read 40 papers and manually select the right one for every prompt.
+A code generation task needs a different reasoning strategy than a research synthesis task, which needs a different strategy than a logic puzzle. The academic literature describes over 45 distinct reasoning frameworks -- each optimized for specific task types and complexity levels. But no developer has time to read dozens of papers and manually select the right one for every prompt.
 
 PromptCore encodes that expertise into a single tool call.
 
@@ -45,7 +45,7 @@ flowchart LR
 **Three steps, one tool call:**
 
 1. **Send your task** -- PromptCore analyzes category (code, math, logic, creative, research, data, planning), complexity (0--10), and intent (17 types including decomposition, verification, exploration)
-2. **Framework selected** -- Heuristic scoring matches your task against 40 peer-reviewed reasoning strategies, selecting the one with the highest fit
+2. **Framework selected** -- Heuristic scoring matches your task against 47 peer-reviewed reasoning strategies, selecting the one with the highest fit
 3. **Meta-prompt returned** -- A structured prompt, built on the selected framework's methodology, ready to feed to any LLM
 
 No LLM calls. No API keys for selection. Runs in under 1ms.
@@ -87,7 +87,7 @@ Compare that to a naive prompt ("Write a fibonacci function") or a blanket Chain
 
 ## Framework Catalog
 
-PromptCore includes 40 reasoning frameworks from published research, organized into six categories.
+PromptCore includes 47 reasoning frameworks from published research, organized into seven categories.
 
 ```mermaid
 graph TB
@@ -149,16 +149,27 @@ graph TB
         ad6["Chain of Table"]
     end
 
+    subgraph MD["Modern"]
+        md1["Self-Discover"]
+        md2["Chain of Draft"]
+        md3["CRITIC"]
+        md4["Chain of Code"]
+        md5["RE2 Re-Reading"]
+        md6["Chain-of-Abstraction"]
+        md7["Deliberate-then-Generate"]
+    end
+
     style ZS fill:#0d1117,stroke:#58a6ff,color:#c9d1d9
     style TG fill:#0d1117,stroke:#f0883e,color:#c9d1d9
     style DC fill:#0d1117,stroke:#a371f7,color:#c9d1d9
     style EN fill:#0d1117,stroke:#3fb950,color:#c9d1d9
     style SC fill:#0d1117,stroke:#f85149,color:#c9d1d9
     style AD fill:#0d1117,stroke:#d2a8ff,color:#c9d1d9
+    style MD fill:#0d1117,stroke:#e3b341,color:#c9d1d9
 ```
 
 <details>
-<summary><strong>Full Framework Reference Table (40 frameworks)</strong></summary>
+<summary><strong>Full Framework Reference Table (48 entries)</strong></summary>
 
 | Framework | Best For | Complexity Threshold |
 |-----------|----------|---------------------|
@@ -198,6 +209,13 @@ graph TB
 | Meta-CoT | Logic, Math, Research | 6.0 |
 | Cumulative Reasoning | Logic, Math, Research | 6.0 |
 | Recursion of Thought | Math, Code, Logic | 7.0 |
+| Self-Discover | General, Logic, Planning, Research | 7.0 |
+| CRITIC | Research, Data, Code, General | 6.0 |
+| Chain of Code | Code, Math, Data, Logic | 6.0 |
+| Chain-of-Abstraction | Math, Data, Research | 5.0 |
+| Deliberate-then-Generate | Creative, General, Research | 4.0 |
+| RE2 (Re-Reading) | Math, Logic, Research | 2.0 |
+| Chain of Draft | Math, Logic, Code, Creative, General | 3.0 |
 | ReAct | Research, Code, Data | 7.0 |
 | Reflexion | Code, Math, Logic | 8.0 |
 | Graph of Thoughts | Planning, Research, Logic | 8.0 |
@@ -214,7 +232,7 @@ graph TB
 | `recommend_strategy` | Analyze a task and recommend the optimal reasoning framework with category, complexity, and intent breakdown |
 | `generate_meta_prompt` | Generate a structured meta-prompt using the selected framework |
 | `log_execution_feedback` | Record feedback about prompt effectiveness for analytics |
-| `list_available_frameworks` | Enumerate all 40 frameworks with metadata |
+| `list_available_frameworks` | Enumerate all 47 frameworks with metadata |
 | `get_usage_stats` | Query usage statistics and framework effectiveness trends |
 
 ---
@@ -227,7 +245,7 @@ graph TB
 
     subgraph Domain["Domain Layer"]
         Selector["FrameworkSelector<br/><code>selector.py</code>"]
-        Frameworks["Framework Registry<br/><code>frameworks.py</code><br/>40 implementations"]
+        Frameworks["Framework Registry<br/><code>frameworks/</code> package<br/>47 implementations"]
         Builder["PromptBuilder<br/><code>builder.py</code>"]
         Selector --> Frameworks
         Frameworks --> Builder
@@ -256,7 +274,7 @@ graph TB
 src/promptcore/
 ├── main.py              # MCP server entry point (FastMCP, stdio transport)
 ├── domain/
-│   ├── frameworks.py    # 40 reasoning framework implementations
+│   ├── frameworks.py    # 47 reasoning framework implementations (frameworks/ package incl. modern.py)
 │   ├── selector.py      # Task analysis: category, complexity, intent, framework scoring
 │   └── builder.py       # Meta-prompt assembly from framework templates
 ├── persistence/
@@ -398,7 +416,7 @@ def enhanced_llm_call(task: str, context: str = "") -> str:
 
 PromptCore is not the only approach to prompt optimization. See [docs/COMPARISON.md](docs/COMPARISON.md) for detailed comparisons against DSPy (Stanford), PromptFlow (Microsoft), LangChain Templates, manual engineering, and interactive playgrounds -- including an honest assessment of where each approach wins.
 
-**The short version:** PromptCore is the only tool that provides automatic, zero-LLM-cost framework selection from a curated library of 40 peer-reviewed strategies, exposed as MCP tools. If you need LLM-in-the-loop optimization, use DSPy. If you need a visual workflow, use PromptFlow. If you want drop-in reasoning enhancement for agent pipelines, use PromptCore.
+**The short version:** PromptCore is the only tool that provides automatic, zero-LLM-cost framework selection from a curated library of 47 peer-reviewed strategies, exposed as MCP tools. If you need LLM-in-the-loop optimization, use DSPy. If you need a visual workflow, use PromptFlow. If you want drop-in reasoning enhancement for agent pipelines, use PromptCore.
 
 ---
 
