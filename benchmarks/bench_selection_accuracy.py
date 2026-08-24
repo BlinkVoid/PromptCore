@@ -41,10 +41,10 @@ TEST_TASKS: list[dict[str, Any]] = [
     {"task": "Debug this JavaScript error: 'Cannot read property of undefined'. Here's the code...", "category": TaskCategory.CODE, "expert_framework": "self_ask", "complexity": 4},
     {"task": "Refactor this 500-line class to use dependency injection and proper separation of concerns.", "category": TaskCategory.CODE, "expert_framework": "step_back", "complexity": 8},
     {"task": "Implement a thread-safe LRU cache in Rust.", "category": TaskCategory.CODE, "expert_framework": "plan_and_solve", "complexity": 7},
-    {"task": "Fix this SQL query that's running slowly on large datasets.", "category": TaskCategory.CODE, "expert_framework": "self_refinement", "complexity": 6},
+    {"task": "Fix this SQL query that's running slowly on large datasets.", "category": TaskCategory.CODE, "expert_framework": "self_refine", "complexity": 6},
     {"task": "Create a React hook for managing form state with validation.", "category": TaskCategory.CODE, "expert_framework": "chain_of_thought", "complexity": 5},
     {"task": "Build a distributed rate limiter that works across multiple servers.", "category": TaskCategory.CODE, "expert_framework": "tree_of_thoughts", "complexity": 9},
-    {"task": "Optimize this algorithm from O(n²) to O(n log n).", "category": TaskCategory.CODE, "expert_framework": "analogical_reasoning", "complexity": 7},
+    {"task": "Optimize this algorithm from O(n²) to O(n log n).", "category": TaskCategory.CODE, "expert_framework": "analogical", "complexity": 7},
     {"task": "Write a function to parse and validate email addresses according to RFC 5322.", "category": TaskCategory.CODE, "expert_framework": "program_of_thoughts", "complexity": 6},
     {"task": "Create a TypeScript type definition for this complex nested API response.", "category": TaskCategory.CODE, "expert_framework": "chain_of_thought", "complexity": 4},
     {"task": "Design a system that handles 10,000 concurrent websocket connections.", "category": TaskCategory.CODE, "expert_framework": "tree_of_thoughts", "complexity": 9},
@@ -68,12 +68,12 @@ TEST_TASKS: list[dict[str, Any]] = [
     {"task": "Prove that if all cats are mammals and some mammals are pets, then some cats are pets.", "category": TaskCategory.LOGIC, "expert_framework": "chain_of_thought", "complexity": 5},
     {"task": "Identify the logical fallacy in this argument.", "category": TaskCategory.LOGIC, "expert_framework": "maieutic", "complexity": 6},
     {"task": "Is this syllogism valid or invalid?", "category": TaskCategory.LOGIC, "expert_framework": "chain_of_thought", "complexity": 4},
-    {"task": "Determine if these two boolean expressions are logically equivalent.", "category": TaskCategory.LOGIC, "expert_framework": "contrastive", "complexity": 5},
+    {"task": "Determine if these two boolean expressions are logically equivalent.", "category": TaskCategory.LOGIC, "expert_framework": "contrastive_cot", "complexity": 5},
     {"task": "Find the contradiction in this set of statements.", "category": TaskCategory.LOGIC, "expert_framework": "self_ask", "complexity": 6},
     {"task": "If P implies Q and not-Q is true, what can we conclude about P?", "category": TaskCategory.LOGIC, "expert_framework": "chain_of_thought", "complexity": 4},
     {"task": "Evaluate this complex nested conditional statement.", "category": TaskCategory.LOGIC, "expert_framework": "chain_of_thought", "complexity": 5},
     {"task": "Is this reasoning deductive or inductive? Explain why.", "category": TaskCategory.LOGIC, "expert_framework": "step_back", "complexity": 5},
-    {"task": "Spot the flaw in this proof that 1 = 2.", "category": TaskCategory.LOGIC, "expert_framework": "reverse", "complexity": 6},
+    {"task": "Spot the flaw in this proof that 1 = 2.", "category": TaskCategory.LOGIC, "expert_framework": "reverse_cot", "complexity": 6},
     {"task": "Translate this English statement into propositional logic.", "category": TaskCategory.LOGIC, "expert_framework": "chain_of_thought", "complexity": 4},
     {"task": "Show that this argument commits the fallacy of affirming the consequent.", "category": TaskCategory.LOGIC, "expert_framework": "maieutic", "complexity": 6},
     {"task": "Given these premises, what conclusions can be validly drawn?", "category": TaskCategory.LOGIC, "expert_framework": "tree_of_thoughts", "complexity": 7},
@@ -104,17 +104,17 @@ TEST_TASKS: list[dict[str, Any]] = [
     {"task": "Identify trends in this time series data.", "category": TaskCategory.DATA, "expert_framework": "thread_of_thought", "complexity": 6},
     {"task": "Normalize these features for machine learning preprocessing.", "category": TaskCategory.DATA, "expert_framework": "chain_of_thought", "complexity": 5},
     {"task": "Write a SQL query to find the top 5 customers by total order value.", "category": TaskCategory.DATA, "expert_framework": "chain_of_table", "complexity": 5},
-    {"task": "Detect anomalies in this network traffic log.", "category": TaskCategory.DATA, "expert_framework": "contrastive", "complexity": 7},
+    {"task": "Detect anomalies in this network traffic log.", "category": TaskCategory.DATA, "expert_framework": "contrastive_cot", "complexity": 7},
     
     # RESEARCH category (12 tasks)
     {"task": "Summarize the key findings from this research paper on climate change.", "category": TaskCategory.RESEARCH, "expert_framework": "chain_of_density", "complexity": 6},
-    {"task": "Compare and contrast the approaches in these two studies.", "category": TaskCategory.RESEARCH, "expert_framework": "contrastive", "complexity": 6},
+    {"task": "Compare and contrast the approaches in these two studies.", "category": TaskCategory.RESEARCH, "expert_framework": "contrastive_cot", "complexity": 6},
     {"task": "What are the limitations of this experimental design?", "category": TaskCategory.RESEARCH, "expert_framework": "maieutic", "complexity": 7},
     {"task": "Evaluate the credibility of these sources.", "category": TaskCategory.RESEARCH, "expert_framework": "chain_of_verification", "complexity": 6},
     {"task": "Synthesize information from these five papers on transformer architectures.", "category": TaskCategory.RESEARCH, "expert_framework": "step_back", "complexity": 8},
     {"task": "What gaps exist in the current literature on reinforcement learning?", "category": TaskCategory.RESEARCH, "expert_framework": "self_ask", "complexity": 7},
     {"task": "Assess the methodology used in this psychology study.", "category": TaskCategory.RESEARCH, "expert_framework": "maieutic", "complexity": 6},
-    {"task": "Review the evidence for and against this hypothesis.", "category": TaskCategory.RESEARCH, "expert_framework": "contrastive", "complexity": 7},
+    {"task": "Review the evidence for and against this hypothesis.", "category": TaskCategory.RESEARCH, "expert_framework": "contrastive_cot", "complexity": 7},
     {"task": "Extract the main arguments from this philosophical text.", "category": TaskCategory.RESEARCH, "expert_framework": "thread_of_thought", "complexity": 6},
     {"task": "Investigate whether this correlation implies causation.", "category": TaskCategory.RESEARCH, "expert_framework": "step_back", "complexity": 7},
     {"task": "Survey the current state of quantum computing research.", "category": TaskCategory.RESEARCH, "expert_framework": "step_back", "complexity": 8},
@@ -135,27 +135,38 @@ TEST_TASKS: list[dict[str, Any]] = [
     {"task": "How should we phase this feature implementation?", "category": TaskCategory.PLANNING, "expert_framework": "least_to_most", "complexity": 5},
     
     # GENERAL category (16 tasks)
-    {"task": "What is the capital of France?", "category": TaskCategory.GENERAL, "expert_framework": "zero_shot", "complexity": 1},
+    {"task": "What is the capital of France?", "category": TaskCategory.GENERAL, "expert_framework": "role_prompting", "acceptable": ["rephrase_and_respond", "prompt_paraphrasing", "system2_attention"], "complexity": 1},
     {"task": "Explain how photosynthesis works.", "category": TaskCategory.GENERAL, "expert_framework": "chain_of_thought", "complexity": 4},
-    {"task": "Who won the World Cup in 2018?", "category": TaskCategory.GENERAL, "expert_framework": "zero_shot", "complexity": 1},
-    {"task": "What are the main differences between REST and GraphQL?", "category": TaskCategory.GENERAL, "expert_framework": "contrastive", "complexity": 5},
+    {"task": "Who won the World Cup in 2018?", "category": TaskCategory.GENERAL, "expert_framework": "role_prompting", "acceptable": ["rephrase_and_respond", "prompt_paraphrasing", "system2_attention"], "complexity": 1},
+    {"task": "What are the main differences between REST and GraphQL?", "category": TaskCategory.GENERAL, "expert_framework": "contrastive_cot", "complexity": 5},
     {"task": "Define machine learning in simple terms.", "category": TaskCategory.GENERAL, "expert_framework": "chain_of_thought", "complexity": 3},
-    {"task": "List the benefits of regular exercise.", "category": TaskCategory.GENERAL, "expert_framework": "zero_shot", "complexity": 2},
+    {"task": "List the benefits of regular exercise.", "category": TaskCategory.GENERAL, "expert_framework": "role_prompting", "acceptable": ["rephrase_and_respond", "prompt_paraphrasing", "system2_attention"], "complexity": 1},
     {"task": "How does blockchain technology work?", "category": TaskCategory.GENERAL, "expert_framework": "analogical", "complexity": 5},
-    {"task": "What time is it in Tokyo right now?", "category": TaskCategory.GENERAL, "expert_framework": "zero_shot", "complexity": 1},
+    {"task": "What time is it in Tokyo right now?", "category": TaskCategory.GENERAL, "expert_framework": "role_prompting", "acceptable": ["rephrase_and_respond", "prompt_paraphrasing", "system2_attention"], "complexity": 1},
     {"task": "Explain the concept of supply and demand.", "category": TaskCategory.GENERAL, "expert_framework": "chain_of_thought", "complexity": 4},
     {"task": "What are NFTs and how do they work?", "category": TaskCategory.GENERAL, "expert_framework": "analogical", "complexity": 5},
     {"task": "Describe the water cycle.", "category": TaskCategory.GENERAL, "expert_framework": "chain_of_thought", "complexity": 3},
-    {"task": "Who wrote 'To Kill a Mockingbird'?", "category": TaskCategory.GENERAL, "expert_framework": "zero_shot", "complexity": 1},
-    {"task": "What is the difference between HTTP and HTTPS?", "category": TaskCategory.GENERAL, "expert_framework": "contrastive", "complexity": 4},
+    {"task": "Who wrote 'To Kill a Mockingbird'?", "category": TaskCategory.GENERAL, "expert_framework": "role_prompting", "acceptable": ["rephrase_and_respond", "prompt_paraphrasing", "system2_attention"], "complexity": 1},
+    {"task": "What is the difference between HTTP and HTTPS?", "category": TaskCategory.GENERAL, "expert_framework": "contrastive_cot", "complexity": 4},
     {"task": "Explain the theory of evolution.", "category": TaskCategory.GENERAL, "expert_framework": "step_back", "complexity": 6},
-    {"task": "What is the tallest mountain in the world?", "category": TaskCategory.GENERAL, "expert_framework": "zero_shot", "complexity": 1},
+    {"task": "What is the tallest mountain in the world?", "category": TaskCategory.GENERAL, "expert_framework": "role_prompting", "acceptable": ["rephrase_and_respond", "prompt_paraphrasing", "system2_attention"], "complexity": 1},
     {"task": "How do vaccines work?", "category": TaskCategory.GENERAL, "expert_framework": "chain_of_thought", "complexity": 4},
 ]
 
 
+def validate_labels() -> None:
+    """Fail fast if any ground-truth label is not a registered framework."""
+    valid = set(FRAMEWORK_REGISTRY.keys())
+    for tc in TEST_TASKS:
+        labels = [tc["expert_framework"]] + tc.get("acceptable", [])
+        bad = [l for l in labels if l not in valid]
+        if bad:
+            raise ValueError(f"Invalid framework labels {bad} in task: {tc['task'][:60]}")
+
+
 def run_benchmark() -> dict[str, Any]:
     """Run the framework selection accuracy benchmark."""
+    validate_labels()
     logger.info("Starting framework selection accuracy benchmark")
     logger.info(f"Total test tasks: {len(TEST_TASKS)}")
     
@@ -181,13 +192,22 @@ def run_benchmark() -> dict[str, Any]:
         # Run analysis
         analysis = selector.analyze(task_text)
         
-        # Check exact match
-        exact_match = analysis.recommended_framework == expert_framework
+        # Check exact match (predicted is the expert choice OR in its acceptable set)
+        acceptable = set(test_case.get("acceptable", []))
+        exact_match = (
+            analysis.recommended_framework == expert_framework
+            or analysis.recommended_framework in acceptable
+        )
         if exact_match:
             exact_matches += 1
-        
-        # Check top-3 match
-        top3_match = expert_framework in analysis.alternative_frameworks or exact_match
+
+        # Check top-3 match (expert choice or any acceptable choice in top 3)
+        top3_set = set(analysis.alternative_frameworks[:3])
+        top3_match = (
+            expert_framework in top3_set
+            or bool(top3_set & acceptable)
+            or exact_match
+        )
         if top3_match:
             top3_matches += 1
         
