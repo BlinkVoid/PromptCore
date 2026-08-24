@@ -8,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 [![MCP Compatible](https://img.shields.io/badge/MCP-compatible-blue?style=flat-square)](https://modelcontextprotocol.io/)
 [![Frameworks](https://img.shields.io/badge/reasoning_frameworks-47-orange?style=flat-square)](#framework-catalog)
-[![Tests](https://img.shields.io/badge/tests-22_passing-brightgreen?style=flat-square)](#)
+[![Tests](https://img.shields.io/badge/tests-52_passing-brightgreen?style=flat-square)](#)
 
 An MCP server that analyzes any task, selects the optimal reasoning framework from 47 peer-reviewed strategies, and generates a tailored meta-prompt -- ready to feed to any LLM. No LLM calls required for selection. Deterministic. Sub-millisecond.
 
@@ -169,7 +169,7 @@ graph TB
 ```
 
 <details>
-<summary><strong>Full Framework Reference Table (48 entries)</strong></summary>
+<summary><strong>Full Framework Reference Table (47 entries)</strong></summary>
 
 | Framework | Best For | Complexity Threshold |
 |-----------|----------|---------------------|

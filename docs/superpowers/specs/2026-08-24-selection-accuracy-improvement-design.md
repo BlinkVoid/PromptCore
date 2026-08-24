@@ -1,7 +1,7 @@
 # Design: Selection Accuracy Improvement Round
 
 **Date:** 2026-08-24
-**Status:** Approved (Approach A — deterministic retune)
+**Status:** Implemented (see pipeline changelog) — final: exact 30.00% / top-3 47.73% / category 63.64% on the frozen 220-task set
 **Baseline:** Exact match 19%, top-3 match 35%, category detection 67% (`benchmarks/results/selection_accuracy.json`, 100 tasks)
 
 ## Problem

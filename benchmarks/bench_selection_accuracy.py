@@ -270,7 +270,7 @@ TEST_TASKS: list[dict[str, Any]] = [
     {"task": "What is the difference between weather and climate?", "category": TaskCategory.GENERAL, "expert_framework": "contrastive_cot", "complexity": 4},
     {"task": "Why do cities tend to be warmer than the surrounding countryside?", "category": TaskCategory.GENERAL, "expert_framework": "step_back", "acceptable": ["chain_of_thought"], "complexity": 5},
 
-    # --- Modern frameworks batch (Task 7, post-2023 wave): 18 tasks ---
+    # --- Modern frameworks batch (Task 7, post-2023 wave): 19 tasks ---
     # chain_of_draft
     {"task": "Briefly compute the average of 17, 23, 31, and 49, showing each working step in under five words.", "category": TaskCategory.MATH, "expert_framework": "chain_of_draft", "acceptable": ["chain_of_thought"], "complexity": 3},
     {"task": "Return the kth largest element of this list in code, keeping each reasoning step terse and condensed.", "category": TaskCategory.CODE, "expert_framework": "chain_of_draft", "acceptable": ["chain_of_thought", "program_of_thoughts"], "complexity": 4},
