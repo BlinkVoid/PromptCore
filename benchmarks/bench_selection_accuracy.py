@@ -151,6 +151,124 @@ TEST_TASKS: list[dict[str, Any]] = [
     {"task": "Explain the theory of evolution.", "category": TaskCategory.GENERAL, "expert_framework": "step_back", "complexity": 6},
     {"task": "What is the tallest mountain in the world?", "category": TaskCategory.GENERAL, "expert_framework": "role_prompting", "acceptable": ["rephrase_and_respond", "prompt_paraphrasing", "system2_attention"], "complexity": 1},
     {"task": "How do vaccines work?", "category": TaskCategory.GENERAL, "expert_framework": "chain_of_thought", "complexity": 4},
+
+    # --- Expansion batch (Task 2, frozen eval set): +13 per category below, +12 PLANNING, +10 GENERAL ---
+    # CODE additions (13)
+    {"task": "Write a bash one-liner that counts unique client IPs in an nginx access log.", "category": TaskCategory.CODE, "expert_framework": "program_of_thoughts", "complexity": 2},
+    {"task": "Add validation to this function that parses user-supplied ages so it rejects negatives and non-numbers.", "category": TaskCategory.CODE, "expert_framework": "chain_of_thought", "acceptable": ["program_of_thoughts"], "complexity": 3},
+    {"task": "Convert this callback-based file reader to use async/await.", "category": TaskCategory.CODE, "expert_framework": "chain_of_thought", "complexity": 3},
+    {"task": "Add cursor-based pagination to this REST endpoint that returns sorted search results.", "category": TaskCategory.CODE, "expert_framework": "least_to_most", "acceptable": ["plan_and_solve"], "complexity": 5},
+    {"task": "Write integration tests for a checkout flow, mocking the payment gateway.", "category": TaskCategory.CODE, "expert_framework": "plan_and_solve", "complexity": 6},
+    {"task": "Refactor these three duplicated date-formatting snippets into one shared utility.", "category": TaskCategory.CODE, "expert_framework": "step_back", "complexity": 4},
+    {"task": "Figure out why this React component re-renders on every keystroke.", "category": TaskCategory.CODE, "expert_framework": "self_ask", "complexity": 5},
+    {"task": "Improve this pull request: tighten naming, remove dead branches, and add docstrings.", "category": TaskCategory.CODE, "expert_framework": "self_refine", "acceptable": ["reflexion"], "complexity": 6},
+    {"task": "Sequence the work to port this Python ETL pipeline to Go without breaking downstream consumers.", "category": TaskCategory.CODE, "expert_framework": "least_to_most", "acceptable": ["plan_and_solve"], "complexity": 7},
+    {"task": "Design a cache-invalidation strategy for a CDN-backed product catalog with regional pricing.", "category": TaskCategory.CODE, "expert_framework": "tree_of_thoughts", "acceptable": ["graph_of_thoughts"], "complexity": 8},
+    {"task": "Hunt down an intermittent memory leak in a long-running Node.js worker process.", "category": TaskCategory.CODE, "expert_framework": "reflexion", "acceptable": ["self_refine"], "complexity": 8},
+    {"task": "Architect an offline-first sync engine that merges conflicting edits from many devices.", "category": TaskCategory.CODE, "expert_framework": "graph_of_thoughts", "acceptable": ["tree_of_thoughts"], "complexity": 9},
+    {"task": "Implement an expression parser that handles nested parentheses and operator precedence.", "category": TaskCategory.CODE, "expert_framework": "recursion_of_thought", "acceptable": ["least_to_most"], "complexity": 7},
+    {"task": "Design a retry-and-backoff policy for a flaky third-party API whose rate limits reset hourly.", "category": TaskCategory.CODE, "expert_framework": "reasoning_via_planning", "acceptable": ["plan_and_solve"], "complexity": 8},
+
+    # MATH additions (13)
+    {"task": "If a shirt costs $45 after a 25% discount, what was its original price?", "category": TaskCategory.MATH, "expert_framework": "program_of_thoughts", "complexity": 2},
+    {"task": "A recipe serves 4 and calls for 350 g of flour; how much flour do I need for 7 servings?", "category": TaskCategory.MATH, "expert_framework": "chain_of_thought", "acceptable": ["program_of_thoughts"], "complexity": 2},
+    {"task": "Compute a 15% tip on an $83.60 bill split three ways, to the nearest cent.", "category": TaskCategory.MATH, "expert_framework": "faithful_cot", "acceptable": ["chain_of_thought"], "complexity": 3},
+    {"task": "Convert 68°F to Celsius and round to one decimal place.", "category": TaskCategory.MATH, "expert_framework": "chain_of_thought", "complexity": 2},
+    {"task": "How many distinct ways can the letters of 'LEVEL' be arranged?", "category": TaskCategory.MATH, "expert_framework": "program_of_thoughts", "complexity": 5},
+    {"task": "Two dice are rolled; what is the probability the sum is 8 given that at least one die shows a 5?", "category": TaskCategory.MATH, "expert_framework": "chain_of_thought", "acceptable": ["faithful_cot"], "complexity": 6},
+    {"task": "Solve the recurrence T(n) = 2T(n/2) + n by unrolling it step by step.", "category": TaskCategory.MATH, "expert_framework": "least_to_most", "complexity": 5},
+    {"task": "Estimate how many piano tuners work in Chicago, then state your confidence in the estimate.", "category": TaskCategory.MATH, "expert_framework": "self_calibration", "complexity": 6},
+    {"task": "Find all integer pairs (x, y) with 3x + 4y = 41 and x, y > 0.", "category": TaskCategory.MATH, "expert_framework": "chain_of_thought", "complexity": 5},
+    {"task": "Determine whether the infinite series Σ 1/(n·ln n) converges or diverges.", "category": TaskCategory.MATH, "expert_framework": "cumulative_reasoning", "complexity": 7},
+    {"task": "You have two ropes that each burn for exactly 60 minutes but non-uniformly. Measure exactly 45 minutes.", "category": TaskCategory.MATH, "expert_framework": "tree_of_thoughts", "acceptable": ["mixture_of_reasoning"], "complexity": 8},
+    {"task": "Prove that among any 13 people, at least two share a birth month.", "category": TaskCategory.MATH, "expert_framework": "meta_cot", "acceptable": ["step_back"], "complexity": 7},
+    {"task": "Minimize the surface area of an open-top box with a volume of 1000 cm³.", "category": TaskCategory.MATH, "expert_framework": "mixture_of_reasoning", "acceptable": ["tree_of_thoughts"], "complexity": 8},
+
+    # LOGIC additions (13)
+    {"task": "What comes next in the sequence 2, 4, 8, 16, ...? Justify your answer.", "category": TaskCategory.LOGIC, "expert_framework": "chain_of_thought", "complexity": 2},
+    {"task": "Is 'some dogs are not trained' the logical negation of 'all dogs are trained'?", "category": TaskCategory.LOGIC, "expert_framework": "self_ask", "complexity": 3},
+    {"task": "Which syllogism form is valid: (a) All A are B, X is A, therefore X is B; or (b) All A are B, X is B, therefore X is A?", "category": TaskCategory.LOGIC, "expert_framework": "contrastive_cot", "acceptable": ["chain_of_thought"], "complexity": 3},
+    {"task": "If today is Thursday, what day comes three days after the day before yesterday?", "category": TaskCategory.LOGIC, "expert_framework": "chain_of_thought", "complexity": 3},
+    {"task": "Knights always tell the truth and knaves always lie. An islander says 'I am a knave.' What is he?", "category": TaskCategory.LOGIC, "expert_framework": "self_ask", "complexity": 5},
+    {"task": "Four friends each rank five movies; given their pairwise disagreements, reconstruct everyone's full ranking.", "category": TaskCategory.LOGIC, "expert_framework": "chain_of_thought", "complexity": 5},
+    {"task": "Given alibi timelines that partially conflict, determine which of five suspects must be lying.", "category": TaskCategory.LOGIC, "expert_framework": "tree_of_thoughts", "complexity": 6},
+    {"task": "Identify the implicit premise this argument depends on but never states.", "category": TaskCategory.LOGIC, "expert_framework": "step_back", "acceptable": ["meta_cot"], "complexity": 5},
+    {"task": "Verify each inference step in this legal-style argument chain and flag any unsupported leaps.", "category": TaskCategory.LOGIC, "expert_framework": "chain_of_verification", "complexity": 6},
+    {"task": "Does the barber paradox reveal a genuine contradiction or rest on a faulty premise? Resolve it.", "category": TaskCategory.LOGIC, "expert_framework": "cumulative_reasoning", "acceptable": ["tree_of_thoughts"], "complexity": 8},
+    {"task": "Analyze this modal argument about necessity and possibility for equivocation on the word 'must'.", "category": TaskCategory.LOGIC, "expert_framework": "meta_cot", "acceptable": ["step_back"], "complexity": 8},
+    {"task": "Eight constraint clues describe a tournament schedule; derive the full fixture list or prove it inconsistent.", "category": TaskCategory.LOGIC, "expert_framework": "graph_of_thoughts", "complexity": 8},
+    {"task": "Evaluate whether this Bayesian argument commits the base-rate fallacy, showing both analyses side by side.", "category": TaskCategory.LOGIC, "expert_framework": "contrastive_cot", "complexity": 7},
+
+    # CREATIVE additions (13)
+    {"task": "Write a bedtime story about a sleepy dragon for a 4-year-old.", "category": TaskCategory.CREATIVE, "expert_framework": "role_prompting", "acceptable": ["emotion_prompting"], "complexity": 3},
+    {"task": "Compose a short encouraging note for a friend who failed their driving test.", "category": TaskCategory.CREATIVE, "expert_framework": "emotion_prompting", "complexity": 2},
+    {"task": "As a pirate captain, announce to your crew that rum rations are being halved.", "category": TaskCategory.CREATIVE, "expert_framework": "role_prompting", "complexity": 2},
+    {"task": "Write hint-only clues for a children's scavenger hunt around the house.", "category": TaskCategory.CREATIVE, "expert_framework": "directional_stimulus", "acceptable": ["analogical"], "complexity": 3},
+    {"task": "Write a limerick about a cat who steals socks.", "category": TaskCategory.CREATIVE, "expert_framework": "role_prompting", "complexity": 2},
+    {"task": "Describe the internet to a medieval blacksmith using only farming metaphors.", "category": TaskCategory.CREATIVE, "expert_framework": "analogical", "complexity": 3},
+    {"task": "Write a best man's speech that teases the groom without embarrassing him.", "category": TaskCategory.CREATIVE, "expert_framework": "role_prompting", "complexity": 5},
+    {"task": "Draft a heartfelt resignation letter thanking a team you loved working with.", "category": TaskCategory.CREATIVE, "expert_framework": "emotion_prompting", "acceptable": ["role_prompting"], "complexity": 4},
+    {"task": "Create mood-board keywords for a noir graphic novel set in rainy Lisbon.", "category": TaskCategory.CREATIVE, "expert_framework": "directional_stimulus", "complexity": 5},
+    {"task": "Compress this 300-word bio into punchier versions at 150, 75, and 30 words.", "category": TaskCategory.CREATIVE, "expert_framework": "chain_of_density", "complexity": 4},
+    {"task": "Sketch six taglines for an eco-friendly sneaker launch, then flesh out the two best ones.", "category": TaskCategory.CREATIVE, "expert_framework": "skeleton_of_thought", "complexity": 5},
+    {"task": "Generate five distinct plot twists for a heist story and pick the most surprising yet coherent one.", "category": TaskCategory.CREATIVE, "expert_framework": "self_consistency", "acceptable": ["demonstration_ensembling"], "complexity": 6},
+    {"task": "Weave three separate character arcs into one novel outline where their storylines converge.", "category": TaskCategory.CREATIVE, "expert_framework": "graph_of_thoughts", "acceptable": ["cumulative_reasoning"], "complexity": 7},
+
+    # DATA additions (13)
+    {"task": "From this table, list all orders placed in March sorted by amount.", "category": TaskCategory.DATA, "expert_framework": "chain_of_table", "complexity": 3},
+    {"task": "Count how many rows in this dataset have a missing value in the 'email' column.", "category": TaskCategory.DATA, "expert_framework": "chain_of_table", "complexity": 2},
+    {"task": "Compute the median and mode of this list of delivery times.", "category": TaskCategory.DATA, "expert_framework": "program_of_thoughts", "complexity": 3},
+    {"task": "Cross-tabulate these survey responses by age group and satisfaction level.", "category": TaskCategory.DATA, "expert_framework": "chain_of_table", "complexity": 5},
+    {"task": "Using this pricing table, compute each invoice total with tiered discounts applied.", "category": TaskCategory.DATA, "expert_framework": "tab_cot", "acceptable": ["chain_of_table"], "complexity": 5},
+    {"task": "De-duplicate customer records where names match but emails differ, and document your merge rules.", "category": TaskCategory.DATA, "expert_framework": "plan_and_solve", "complexity": 6},
+    {"task": "Walk through this streaming sensor buffer segment by segment and note where drift begins.", "category": TaskCategory.DATA, "expert_framework": "thread_of_thought", "complexity": 6},
+    {"task": "Decide which of these three features to drop before running the regression, given the collinearity stats.", "category": TaskCategory.DATA, "expert_framework": "chain_of_thought", "complexity": 6},
+    {"task": "Before crunching this A/B test dump, identify which metric definitions could distort the comparison.", "category": TaskCategory.DATA, "expert_framework": "step_back", "complexity": 7},
+    {"task": "Compare z-score versus IQR methods for flagging outliers in this sensor dataset and report where they disagree.", "category": TaskCategory.DATA, "expert_framework": "contrastive_cot", "complexity": 6},
+    {"task": "From this multi-sheet workbook, build a cohort retention matrix grouped by signup month.", "category": TaskCategory.DATA, "expert_framework": "chain_of_table", "acceptable": ["program_of_thoughts"], "complexity": 8},
+    {"task": "Rate your confidence in each insight you draw from this 40-row sample before recommending action.", "category": TaskCategory.DATA, "expert_framework": "self_calibration", "complexity": 7},
+    {"task": "Model relationships across these five joined tables and explain why nightly revenue aggregates disagree with finance's numbers.", "category": TaskCategory.DATA, "expert_framework": "graph_of_thoughts", "complexity": 8},
+
+    # RESEARCH additions (13)
+    {"task": "Summarize this paper's abstract in plain language for a general audience.", "category": TaskCategory.RESEARCH, "expert_framework": "chain_of_thought", "complexity": 3},
+    {"task": "List peer-reviewed databases where I can find studies on sleep and memory consolidation.", "category": TaskCategory.RESEARCH, "expert_framework": "chain_of_thought", "complexity": 2},
+    {"task": "Acting as a research librarian, show me how to structure a literature-search query on urban heat islands.", "category": TaskCategory.RESEARCH, "expert_framework": "role_prompting", "complexity": 3},
+    {"task": "Question each assumption behind this study's operationalization of 'productivity'.", "category": TaskCategory.RESEARCH, "expert_framework": "maieutic", "complexity": 6},
+    {"task": "Trace how the argument in this essay builds from paragraph to paragraph.", "category": TaskCategory.RESEARCH, "expert_framework": "thread_of_thought", "complexity": 5},
+    {"task": "Fact-check these five cited claims about vitamin D and verify each against its source type.", "category": TaskCategory.RESEARCH, "expert_framework": "chain_of_verification", "complexity": 6},
+    {"task": "State how confident you are in each takeaway from this preliminary study, and why.", "category": TaskCategory.RESEARCH, "expert_framework": "self_calibration", "complexity": 5},
+    {"task": "Draw parallels between the replication crisis in psychology and current issues in AI benchmarking.", "category": TaskCategory.RESEARCH, "expert_framework": "analogical", "complexity": 6},
+    {"task": "Step back from individual deep-learning papers and characterize how the field's core assumptions shifted over the last decade.", "category": TaskCategory.RESEARCH, "expert_framework": "step_back", "complexity": 8},
+    {"task": "Weigh the competing evidence on whether moderate caffeine intake helps or harms long-term heart health.", "category": TaskCategory.RESEARCH, "expert_framework": "contrastive_cot", "complexity": 7},
+    {"task": "Map the rival hypotheses for why the Harappan civilization declined and weigh the archaeological evidence for each.", "category": TaskCategory.RESEARCH, "expert_framework": "tree_of_thoughts", "acceptable": ["graph_of_thoughts"], "complexity": 8},
+    {"task": "Interrogate whether this economics paper's identification strategy actually supports its causal headline.", "category": TaskCategory.RESEARCH, "expert_framework": "maieutic", "acceptable": ["meta_cot"], "complexity": 8},
+    {"task": "Assess whether the conclusions of this meta-analysis actually follow from its inclusion criteria.", "category": TaskCategory.RESEARCH, "expert_framework": "meta_cot", "complexity": 7},
+
+    # PLANNING additions (12)
+    {"task": "Plan a weekend study schedule to prepare for a Saturday morning exam.", "category": TaskCategory.PLANNING, "expert_framework": "plan_and_solve", "complexity": 3},
+    {"task": "Break 'clean out the garage this weekend' into small ordered steps.", "category": TaskCategory.PLANNING, "expert_framework": "least_to_most", "complexity": 2},
+    {"task": "Sketch a bare-bones outline for a 20-minute conference talk on caching basics.", "category": TaskCategory.PLANNING, "expert_framework": "skeleton_of_thought", "complexity": 3},
+    {"task": "Help me choose between three job offers with different salary, growth, and location trade-offs.", "category": TaskCategory.PLANNING, "expert_framework": "tree_of_thoughts", "complexity": 6},
+    {"task": "Organize a two-week sprint that has to absorb an unplanned production incident fix.", "category": TaskCategory.PLANNING, "expert_framework": "plan_and_solve", "complexity": 5},
+    {"task": "Plan a cross-country road trip, adjusting each day's route for weather and road closures as updates arrive.", "category": TaskCategory.PLANNING, "expert_framework": "react", "complexity": 6},
+    {"task": "What questions must we answer before committing to a company-wide remote-work policy?", "category": TaskCategory.PLANNING, "expert_framework": "self_ask", "complexity": 5},
+    {"task": "Devise a plan to cut cloud spend 30% within two quarters without stalling feature work.", "category": TaskCategory.PLANNING, "expert_framework": "reasoning_via_planning", "acceptable": ["plan_and_solve"], "complexity": 6},
+    {"task": "Sequence the steps to migrate a blog from WordPress to a static site generator.", "category": TaskCategory.PLANNING, "expert_framework": "least_to_most", "complexity": 6},
+    {"task": "Allocate a fixed engineering budget across maintenance, tech debt, and new bets for next year.", "category": TaskCategory.PLANNING, "expert_framework": "tree_of_thoughts", "acceptable": ["reasoning_via_planning"], "complexity": 8},
+    {"task": "Coordinate a product launch across engineering, marketing, and support under hard regulatory deadlines.", "category": TaskCategory.PLANNING, "expert_framework": "plan_and_solve", "acceptable": ["reasoning_via_planning"], "complexity": 7},
+    {"task": "Restructure our incident-response process, accounting for interdependent on-call rotations and escalation paths.", "category": TaskCategory.PLANNING, "expert_framework": "graph_of_thoughts", "acceptable": ["tree_of_thoughts"], "complexity": 8},
+
+    # GENERAL additions (10)
+    {"task": "What is the chemical symbol for gold?", "category": TaskCategory.GENERAL, "expert_framework": "role_prompting", "acceptable": ["rephrase_and_respond", "prompt_paraphrasing", "system2_attention"], "complexity": 1},
+    {"task": "Who painted 'The Starry Night'?", "category": TaskCategory.GENERAL, "expert_framework": "role_prompting", "acceptable": ["rephrase_and_respond", "prompt_paraphrasing", "system2_attention"], "complexity": 1},
+    {"task": "Why does ice float on water?", "category": TaskCategory.GENERAL, "expert_framework": "chain_of_thought", "acceptable": ["step_back"], "complexity": 3},
+    {"task": "How many minutes are there in a week?", "category": TaskCategory.GENERAL, "expert_framework": "chain_of_thought", "complexity": 2},
+    {"task": "In plain terms, what does a DNS server do?", "category": TaskCategory.GENERAL, "expert_framework": "chain_of_thought", "acceptable": ["role_prompting"], "complexity": 3},
+    {"task": "What currency is used in Japan?", "category": TaskCategory.GENERAL, "expert_framework": "role_prompting", "acceptable": ["rephrase_and_respond", "prompt_paraphrasing", "system2_attention"], "complexity": 1},
+    {"task": "Explain what an API is using a restaurant analogy.", "category": TaskCategory.GENERAL, "expert_framework": "analogical", "complexity": 3},
+    {"task": "Roughly how tall is the Eiffel Tower compared to a football field?", "category": TaskCategory.GENERAL, "expert_framework": "chain_of_thought", "acceptable": ["prompt_paraphrasing"], "complexity": 2},
+    {"task": "What is the difference between weather and climate?", "category": TaskCategory.GENERAL, "expert_framework": "contrastive_cot", "complexity": 4},
+    {"task": "Why do cities tend to be warmer than the surrounding countryside?", "category": TaskCategory.GENERAL, "expert_framework": "step_back", "acceptable": ["chain_of_thought"], "complexity": 5},
 ]
 
 
@@ -162,6 +280,21 @@ def validate_labels() -> None:
         bad = [l for l in labels if l not in valid]
         if bad:
             raise ValueError(f"Invalid framework labels {bad} in task: {tc['task'][:60]}")
+
+    # Quota checks: ~25 per category, spread over complexity bands
+    from collections import Counter
+    cat_counts = Counter(tc["category"].value for tc in TEST_TASKS)
+    band_counts = Counter(
+        "low" if tc["complexity"] <= 3 else "mid" if tc["complexity"] <= 6 else "high"
+        for tc in TEST_TASKS
+    )
+    for cat in TaskCategory:
+        n = cat_counts[cat.value]
+        assert 20 <= n <= 30, f"{cat.value}: {n} tasks, expected 20-30"
+    assert band_counts["low"] >= 40 and band_counts["mid"] >= 60 and band_counts["high"] >= 40, band_counts
+    # Acceptable sets must never contain the expert label itself duplicated
+    for tc in TEST_TASKS:
+        assert tc["expert_framework"] not in tc.get("acceptable", [])
 
 
 def run_benchmark() -> dict[str, Any]:
