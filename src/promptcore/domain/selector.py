@@ -33,49 +33,106 @@ class TaskAnalysis(BaseModel):
 class FrameworkSelector:
     """Analyzes tasks and selects the optimal reasoning framework."""
     
-    # Keywords for category detection
-    CATEGORY_KEYWORDS: dict[TaskCategory, list[str]] = {
-        TaskCategory.CODE: [
-            "code", "function", "implement", "program", "debug", "fix", "refactor",
-            "class", "method", "api", "algorithm", "compile", "syntax", "bug",
-            "python", "javascript", "typescript", "java", "rust", "go", "sql",
-        ],
-        TaskCategory.MATH: [
-            "calculate", "compute", "equation", "formula", "solve", "math",
-            "number", "sum", "product", "derivative", "integral", "probability",
-            "statistics", "algebra", "geometry", "percentage", "ratio",
-            "shortest path", "weighted graph", "statistical", "significant",
-            "integer", "infinite series", "surface area", "celsius", "arranged",
-        ],
-        TaskCategory.LOGIC: [
-            "prove", "deduce", "infer", "logic", "paradox", "contradiction",
-            "valid", "invalid", "premise", "conclusion", "syllogism", "argument",
-            "if and only if", "therefore", "implies", "boolean",
-            "deductive", "inductive", "negation", "flaw",
-        ],
-        TaskCategory.CREATIVE: [
-            "write", "create", "imagine", "story", "poem", "design", "creative",
-            "brainstorm", "innovate", "generate ideas", "narrative", "art",
-            "compose", "invent", "novel", "unique", "original",
-        ],
-        TaskCategory.DATA: [
-            "data", "table", "csv", "json", "database", "query", "filter",
-            "aggregate", "group by", "group", "join", "dataset", "rows", "columns",
-            "analyze data", "spreadsheet", "records", "entries",
-            "revenue", "sales", "column", "anomalies", "features", "sensor",
-        ],
-        TaskCategory.RESEARCH: [
-            "research", "investigate", "explore", "study", "survey", "review",
-            "literature", "sources", "evidence", "findings", "compare",
-            "evaluate", "assess", "analyze", "examine", "investigate",
-        ],
-        TaskCategory.PLANNING: [
-            "plan", "schedule", "organize", "strategy", "roadmap", "timeline",
-            "steps", "phases", "milestones", "project", "goals", "objectives",
-            "prioritize", "allocate", "coordinate", "manage",
-        ],
+    # Keyword weights: generic domain verbs = 1, specific technical terms = 2,
+    # rare/strong category markers = 3
+    CATEGORY_KEYWORDS: dict[TaskCategory, dict[str, int]] = {
+        TaskCategory.CODE: {
+            "code": 2, "function": 2, "implement": 2, "program": 2, "debug": 2,
+            "fix": 1, "refactor": 2, "class": 1, "method": 2, "api": 2,
+            "algorithm": 2, "compile": 2, "syntax": 2, "bug": 2,
+            "python": 2, "javascript": 2, "typescript": 2, "java": 2, "rust": 2,
+            "go": 1, "sql": 2, "script": 2, "pull request": 2, "module": 2,
+        },
+        TaskCategory.MATH: {
+            "calculate": 1, "compute": 1, "equation": 2, "formula": 2, "solve": 1,
+            "math": 2, "number": 1, "sum": 1, "product": 1, "derivative": 3,
+            "integral": 3, "probability": 2, "statistics": 2, "algebra": 2,
+            "geometry": 2, "percentage": 1, "ratio": 1, "shortest path": 3,
+            "weighted graph": 3, "statistical": 2, "significant": 1,
+            "integer": 2, "infinite series": 3, "surface area": 2, "celsius": 1,
+            "arranged": 1, "differential equations": 3, "proof": 2, "by induction": 3,
+            "divisible": 2, "probability of": 2, "heron's formula": 3,
+        },
+        TaskCategory.LOGIC: {
+            "prove": 2, "deduce": 2, "infer": 1, "logic": 2, "paradox": 3,
+            "contradiction": 2, "valid": 2, "invalid": 2, "premise": 2,
+            "conclusion": 1, "syllogism": 3, "argument": 1, "if and only if": 2,
+            "therefore": 1, "implies": 1, "boolean": 2, "deductive": 2,
+            "inductive": 2, "negation": 2, "flaw": 1, "logical fallacy": 3,
+            "fallacy": 2, "by induction": 3, "undecidable": 3, "halting problem": 3,
+        },
+        TaskCategory.CREATIVE: {
+            "write": 1, "create": 1, "imagine": 1, "story": 2, "poem": 2,
+            "design": 1, "creative": 2, "brainstorm": 2, "innovate": 1,
+            "generate ideas": 2, "narrative": 2, "art": 2, "compose": 1,
+            "invent": 1, "novel": 2, "unique": 1, "original": 1, "haiku": 3,
+            "limerick": 3, "plot twist": 3, "dialogue": 2, "backstory": 2,
+        },
+        TaskCategory.DATA: {
+            "data": 2, "table": 2, "csv": 3, "json": 2, "database": 2,
+            "query": 2, "filter": 1, "aggregate": 2, "group by": 3,
+            "group": 1, "join": 2, "dataset": 2, "rows": 2, "columns": 2,
+            "analyze data": 2, "spreadsheet": 2, "records": 1, "entries": 1,
+            "revenue": 1, "sales": 1, "column": 1, "anomalies": 2,
+            "features": 1, "sensor": 1, "sql": 2, "correlation": 2,
+            "rolling": 2, "normalize": 1, "pivot": 2,
+        },
+        TaskCategory.RESEARCH: {
+            "research": 3, "investigate": 2, "explore": 1, "study": 2,
+            "survey": 2, "review": 1, "literature": 3, "sources": 2,
+            "evidence": 2, "findings": 2, "compare": 1, "evaluate": 1,
+            "assess": 1, "analyze": 1, "examine": 1,
+            "methodology": 2, "limitations": 2, "synthesize": 3, "conflicting": 2,
+            "longitudinal": 3, "confounding": 3, "credibility": 2,
+        },
+        TaskCategory.PLANNING: {
+            "plan": 2, "schedule": 2, "organize": 1, "strategy": 2,
+            "roadmap": 3, "timeline": 2, "steps": 1, "phases": 2,
+            "milestones": 3, "project": 1, "goals": 1, "objectives": 1,
+            "prioritize": 2, "allocate": 2, "coordinate": 1, "manage": 1,
+            "resource": 2, "constraints": 1, "risk analysis": 2,
+        },
     }
-    
+
+    # Phrase-level disambiguation rules: (trigger phrase, forced category, min_score_bonus)
+    # Applied after keyword scoring to override frequent ambiguous verbs.
+    CATEGORY_DISAMBIGUATION: list[tuple[str, TaskCategory, int]] = [
+        # CODE beats CREATIVE when "write" is followed by code terms
+        ("write a function", TaskCategory.CODE, 10),
+        ("write a python", TaskCategory.CODE, 10),
+        ("write a script", TaskCategory.CODE, 10),
+        ("write a program", TaskCategory.CODE, 10),
+        ("write code", TaskCategory.CODE, 10),
+        ("implement", TaskCategory.CODE, 5),
+        ("debug", TaskCategory.CODE, 5),
+        ("refactor", TaskCategory.CODE, 5),
+        # CREATIVE beats others only with creative content words
+        ("write a story", TaskCategory.CREATIVE, 10),
+        ("write a poem", TaskCategory.CREATIVE, 10),
+        ("write a haiku", TaskCategory.CREATIVE, 10),
+        ("write a limerick", TaskCategory.CREATIVE, 10),
+        ("plot twist", TaskCategory.CREATIVE, 10),
+        ("short story", TaskCategory.CREATIVE, 5),
+        # LOGIC beats MATH for proof-style phrasing
+        ("prove by induction", TaskCategory.LOGIC, 5),
+        # DATA beats RESEARCH for data-specific phrasing
+        ("dataset", TaskCategory.DATA, 5),
+        ("this dataset", TaskCategory.DATA, 8),
+        ("sql query", TaskCategory.DATA, 8),
+        ("csv", TaskCategory.DATA, 5),
+        # RESEARCH beats GENERAL for paper/source phrasing
+        ("research paper", TaskCategory.RESEARCH, 8),
+        ("literature review", TaskCategory.RESEARCH, 10),
+        ("conflicting papers", TaskCategory.RESEARCH, 10),
+        ("methodology", TaskCategory.RESEARCH, 5),
+        ("sources", TaskCategory.RESEARCH, 5),
+        # PLANNING beats RESEARCH for action-oriented phrasing
+        ("roadmap", TaskCategory.PLANNING, 10),
+        ("milestones", TaskCategory.PLANNING, 8),
+        ("project plan", TaskCategory.PLANNING, 10),
+        ("resource constraints", TaskCategory.PLANNING, 8),
+    ]
+
     # Complexity indicators
     COMPLEXITY_BOOSTERS: list[tuple[str, float]] = [
         (r"\b(complex|complicated|difficult|challenging|hard)\b", 1.5),
@@ -202,21 +259,24 @@ class FrameworkSelector:
         return detected
     
     def _detect_category(self, text: str) -> TaskCategory:
-        """Detect the primary category of the task."""
-        scores: dict[TaskCategory, int] = {cat: 0 for cat in TaskCategory}
-        
+        """Detect the primary category using weighted keywords + disambiguation."""
+        scores: dict[TaskCategory, float] = {cat: 0 for cat in TaskCategory}
+
         for category, keywords in self.CATEGORY_KEYWORDS.items():
-            for keyword in keywords:
+            for keyword, weight in keywords.items():
                 if keyword in text:
-                    scores[category] += 1
-        
-        # Find category with highest score
+                    scores[category] += weight
+
+        # Apply phrase-level disambiguation
+        for phrase, category, bonus in self.CATEGORY_DISAMBIGUATION:
+            if phrase in text:
+                scores[category] += bonus
+
         best_category = max(scores, key=scores.get)  # type: ignore
-        
-        # If no keywords matched, default to GENERAL
+
         if scores[best_category] == 0:
             return TaskCategory.GENERAL
-        
+
         return best_category
     
     def _calculate_complexity(self, task: str, context: str) -> float:

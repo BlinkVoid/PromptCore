@@ -124,3 +124,26 @@ class TestRegressionIteration2:
             "Calculate the compound interest on $10,000 at 5% annual rate over 10 years."
         )
         assert analysis.recommended_framework == "program_of_thoughts"
+
+
+class TestCategoryRegression:
+    def test_research_category_detected(self, selector):
+        assert selector.analyze("Evaluate the credibility of these sources.").category == TaskCategory.RESEARCH
+        assert selector.analyze("Synthesize findings from 5 conflicting papers.").category == TaskCategory.RESEARCH
+
+    def test_planning_category_detected(self, selector):
+        assert selector.analyze("Create a 12-month strategic roadmap with risk analysis.").category == TaskCategory.PLANNING
+        assert selector.analyze("Prioritize these features based on impact and effort.").category == TaskCategory.PLANNING
+
+    def test_logic_category_detected(self, selector):
+        assert selector.analyze("Identify the logical fallacy in this argument.").category == TaskCategory.LOGIC
+        assert selector.analyze("Prove by induction that n³ + 2n is divisible by 3.").category == TaskCategory.LOGIC
+
+    def test_data_category_detected(self, selector):
+        assert selector.analyze("Analyze the correlation between two variables in this small dataset.").category == TaskCategory.DATA
+        assert selector.analyze("Optimize this SQL query that's performing poorly on large datasets.").category == TaskCategory.DATA
+
+    def test_code_not_creative(self, selector):
+        # "write" alone used to push CODE tasks into CREATIVE
+        assert selector.analyze("Write a Python function to reverse a linked list.").category == TaskCategory.CODE
+        assert selector.analyze("Implement a thread-safe LRU cache in Rust.").category == TaskCategory.CODE
