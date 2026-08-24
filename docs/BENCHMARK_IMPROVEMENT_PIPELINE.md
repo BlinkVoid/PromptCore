@@ -38,3 +38,4 @@ This executes all four benchmarks and writes a combined summary.
 |------|-------|-------------|-------------|-------|----------|-------|
 | 2026-03-17 | baseline-19pct | — | 19.00% | 35.00% | 67.00% | Original 100-task eval set |
 | 2026-08-24 | post-benchmark-fix | Fixed invalid ground-truth labels + acceptable-set matching; expanded eval set to frozen 201-task set | 20.40% | 36.32% | 54.23% | Eval-set expansion (100 → 201 stratified tasks); category drop reflects stricter labels, not a regression |
+| 2026-08-24 | scoring-v2 | Capped intent bonus (4.0 flat), added category×complexity tier gating (-5 out-of-tier), recalibrated complexity base/divisor, removed threshold tie-breaker; alternatives no longer filtered by score>0 | 21.39% | 41.79% | 55.72% | All metrics improved; DATA keywords gained "group"/"revenue"/"sales" so grouped-data tasks detect as DATA |

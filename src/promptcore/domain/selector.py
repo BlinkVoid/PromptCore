@@ -64,8 +64,9 @@ class FrameworkSelector:
         ],
         TaskCategory.DATA: [
             "data", "table", "csv", "json", "database", "query", "filter",
-            "aggregate", "group by", "join", "dataset", "rows", "columns",
+            "aggregate", "group by", "group", "join", "dataset", "rows", "columns",
             "analyze data", "spreadsheet", "records", "entries",
+            "revenue", "sales",
         ],
         TaskCategory.RESEARCH: [
             "research", "investigate", "explore", "study", "survey", "review",
@@ -120,6 +121,47 @@ class FrameworkSelector:
         "confidence_estimation": ["how sure", "confidence", "certain", "probability", "likelihood", "reliable"],
         "graph_reasoning": ["graph", "network", "connections", "merge", "nodes", "relationships", "non-linear"],
     }
+
+    # Plausible frameworks per category+complexity tier (GENERAL intentionally unconstrained)
+    CATEGORY_TIERS: dict[TaskCategory, dict[ComplexityLevel, set[str]]] = {
+        TaskCategory.CODE: {
+            ComplexityLevel.LOW: {"chain_of_thought"},
+            ComplexityLevel.MEDIUM: {"program_of_thoughts", "analogical", "self_ask", "self_refine", "contrastive_cot"},
+            ComplexityLevel.HIGH: {"plan_and_solve", "least_to_most", "reflexion", "faithful_cot", "recursion_of_thought"},
+        },
+        TaskCategory.MATH: {
+            ComplexityLevel.LOW: {"chain_of_thought"},
+            ComplexityLevel.MEDIUM: {"program_of_thoughts", "chain_of_thought", "tab_cot", "self_consistency"},
+            ComplexityLevel.HIGH: {"least_to_most", "complexity_based", "cumulative_reasoning", "meta_cot", "reverse_cot"},
+        },
+        TaskCategory.LOGIC: {
+            ComplexityLevel.LOW: {"chain_of_thought", "prompt_paraphrasing"},
+            ComplexityLevel.MEDIUM: {"chain_of_thought", "sim_to_m", "step_back", "contrastive_cot", "system2_attention"},
+            ComplexityLevel.HIGH: {"maieutic", "meta_cot", "tree_of_thoughts", "cumulative_reasoning", "self_ask"},
+        },
+        TaskCategory.CREATIVE: {
+            ComplexityLevel.LOW: {"role_prompting", "emotion_prompting"},
+            ComplexityLevel.MEDIUM: {"directional_stimulus", "analogical", "skeleton_of_thought", "role_prompting"},
+            ComplexityLevel.HIGH: {"tree_of_thoughts", "skeleton_of_thought", "self_refine"},
+        },
+        TaskCategory.DATA: {
+            ComplexityLevel.LOW: {"chain_of_table", "tab_cot"},
+            ComplexityLevel.MEDIUM: {"chain_of_table", "thread_of_thought", "program_of_thoughts", "tab_cot"},
+            ComplexityLevel.HIGH: {"react", "plan_and_solve", "chain_of_density", "contrastive_cot"},
+        },
+        TaskCategory.RESEARCH: {
+            ComplexityLevel.LOW: {"rephrase_and_respond", "role_prompting"},
+            ComplexityLevel.MEDIUM: {"step_back", "self_ask", "chain_of_verification", "thread_of_thought", "chain_of_density"},
+            ComplexityLevel.HIGH: {"maieutic", "graph_of_thoughts", "step_back", "meta_cot", "active_prompting", "mixture_of_reasoning"},
+        },
+        TaskCategory.PLANNING: {
+            ComplexityLevel.LOW: {"skeleton_of_thought", "plan_and_solve"},
+            ComplexityLevel.MEDIUM: {"plan_and_solve", "least_to_most", "tree_of_thoughts", "self_ask"},
+            ComplexityLevel.HIGH: {"reasoning_via_planning", "graph_of_thoughts", "tree_of_thoughts", "buffer_of_thoughts"},
+        },
+    }
+    OUT_OF_TIER_PENALTY = 5.0
+    INTENT_BONUS_CAP = 4.0
     
     def __init__(self):
         pass
@@ -187,7 +229,7 @@ class FrameworkSelector:
         
         # Base complexity from length (normalized)
         word_count = len(full_text.split())
-        length_score = min(word_count / 50, 3.0)  # Max 3 points from length
+        length_score = min(word_count / 65, 3.0)  # Max 3 points from length
         
         # Sentence complexity
         sentences = re.split(r'[.!?]+', full_text)
@@ -213,8 +255,8 @@ class FrameworkSelector:
         # Combine scores
         total = length_score + sentence_score + modifier_score + question_score
         
-        # Add base complexity of 2 (nothing is truly trivial)
-        total += 2.0
+        # Add base complexity of 1
+        total += 1.0
         
         # Clamp to 0-10
         return max(0.0, min(10.0, total))
@@ -238,41 +280,39 @@ class FrameworkSelector:
         """Select the best framework based on intent, category and complexity."""
         
         candidates: list[tuple[type[ReasoningFramework], float, str]] = []
-        
-        # Score each framework
+
+        tier = self.CATEGORY_TIERS.get(category)
+        allowed = tier.get(self._score_to_level(complexity)) if tier else None
+
         for framework_cls in FRAMEWORK_REGISTRY.values():
             score = 0.0
             reasons = []
-            
-            # 1. Intent Match (Highest Priority)
-            intent_match = False
-            for intent in intents:
-                if intent in framework_cls.capabilities:
-                    score += 4.0
-                    reasons.append(f"matches intent '{intent}'")
-                    intent_match = True
-            
-            # 2. Category Match
+
+            # 1. Intent match, capped aggregate bonus
+            matched_intents = [
+                i for i in intents if i in framework_cls.capabilities
+            ]
+            if matched_intents:
+                score += self.INTENT_BONUS_CAP
+                reasons.append(f"matches intent(s) {matched_intents}")
+
+            # 2. Category match
             if category in framework_cls.best_for:
                 score += 2.0
                 reasons.append(f"matches {category.value} category")
-            
-            # 3. Complexity Fit & Sizing
+
+            # 3. Complexity fit
             if complexity >= framework_cls.complexity_threshold:
                 score += 2.0
-                # Penalty for overkill: subtract distance
-                # e.g., Task 3.0 vs Threshold 2.0 -> penalty 0.5
-                # e.g., Task 3.0 vs Threshold 6.0 (not met) -> N/A
-                overkill = (complexity - framework_cls.complexity_threshold) * 0.5
-                score -= min(overkill, 1.5) # Cap penalty
-                reasons.append(f"complexity fit")
+                overkill = (complexity - framework_cls.complexity_threshold) * 0.75
+                score -= min(overkill, 3.0)
+                reasons.append("complexity fit")
             else:
-                # Penalty if task is simpler than framework needs
                 score -= 2.0
-            
-            # 4. Tie-Breaker Bias (Simplicity)
-            # Add a tiny fraction of inverse threshold to prefer simpler tools in ties
-            score += (10 - framework_cls.complexity_threshold) * 0.01
+
+            # 4. Tier gating
+            if allowed is not None and framework_cls.name not in allowed:
+                score -= self.OUT_OF_TIER_PENALTY
 
             candidates.append((framework_cls, score, "; ".join(reasons) if reasons else "default option"))
         
@@ -282,10 +322,10 @@ class FrameworkSelector:
         # Best choice
         best = candidates[0]
         
-        # Alternatives (other high scorers)
+        # Alternatives (next best scorers, regardless of sign so tier penalties
+        # don't hide viable options from top-3 consideration)
         alternatives = [
-            c[0].name for c in candidates[1:4] 
-            if c[1] > 0
+            c[0].name for c in candidates[1:4]
         ]
         
         reasoning = f"Selected {best[0].name}: {best[2]}"
