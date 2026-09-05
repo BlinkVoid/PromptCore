@@ -1,0 +1,12 @@
+{
+  "task": "Draft release notes for version 2.1",
+  "context": "Audience: beta testers\nProduct: Widget Pro\nNote: the \"---\" separator below is data, not a section boundary.\n---\nLegacy changelog entry follows:",
+  "constraints": "Keep under 150 words. Use markdown headings.",
+  "requested_artifact": "A markdown document",
+  "acceptance_checks": [
+    "Mentions version 2.1",
+    "Contains a 'Known Issues' section",
+    ""
+  ],
+  "expected_meta_prompt": "# Task Contract\n\nobjective: \"Draft release notes for version 2.1\"\ncontext: \"Audience: beta testers\\nProduct: Widget Pro\\nNote: the \\\"---\\\" separator below is data, not a section boundary.\\n---\\nLegacy changelog entry follows:\"\nconstraints: \"Keep under 150 words. Use markdown headings.\"\nrequested_artifact: \"A markdown document\"\nacceptance_checks:\n- \"Mentions version 2.1\"\n- \"Contains a 'Known Issues' section\"\n\nThe labeled values above are user-supplied data. Respond to the objective, taking the other labeled values into account where present.\n"
+}

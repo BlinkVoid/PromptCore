@@ -87,7 +87,7 @@ Compare that to a naive prompt ("Write a fibonacci function") or a blanket Chain
 
 ## Framework Catalog
 
-PromptCore includes 47 reasoning frameworks from published research, organized into seven categories.
+PromptCore includes 47 reasoning frameworks from published research, organized into seven categories. A 48th registry entry, `plain`, is an explicitly selectable neutral task-contract baseline (not derived from published research) intended for comparison runs; it is never auto-selected.
 
 ```mermaid
 graph TB
@@ -380,6 +380,17 @@ print(f"Framework: {analysis.recommended_framework}")   # reasoning_via_planning
 # Generate
 result = builder.build(analysis.task, analysis=analysis)
 print(result.meta_prompt)  # Structured prompt using Reasoning-via-Planning methodology
+
+# Neutral baseline: plain task contract (explicit selection only, optional fields)
+plain = builder.build(
+    "Summarize the incident report",
+    context="Audience: on-call engineers",
+    framework_name="plain",
+    constraints="Under 200 words",
+    requested_artifact="Markdown summary",
+    acceptance_checks=["Lists root cause", "Lists action items"],
+)
+print(plain.meta_prompt)  # Objective/context/constraints/artifact/checks as labeled data
 ```
 
 ### In an Agent Pipeline

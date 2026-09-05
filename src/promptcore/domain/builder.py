@@ -28,6 +28,9 @@ class PromptBuilder:
         context: str = "",
         framework_name: Optional[str] = None,
         analysis: Optional[TaskAnalysis] = None,
+        constraints: str = "",
+        requested_artifact: str = "",
+        acceptance_checks: Optional[list[str]] = None,
     ) -> GeneratedPrompt:
         """
         Build a meta-prompt for the given task.
@@ -37,6 +40,9 @@ class PromptBuilder:
             context: Additional context to include
             framework_name: Explicit framework to use (overrides analysis)
             analysis: Pre-computed task analysis (provides framework if not explicit)
+            constraints: Optional constraints supplied by the caller
+            requested_artifact: Optional description of the requested artifact
+            acceptance_checks: Optional acceptance checks supplied by the caller
         
         Returns:
             GeneratedPrompt with the assembled meta-prompt
@@ -52,7 +58,19 @@ class PromptBuilder:
         
         # Get framework class and instantiate
         framework_cls = get_framework(selected_framework)
-        framework: ReasoningFramework = framework_cls()
+
+        # Contract fields are only passed to frameworks that accept them
+        contract_fields = {}
+        if constraints:
+            contract_fields["constraints"] = constraints
+        if requested_artifact:
+            contract_fields["requested_artifact"] = requested_artifact
+        if acceptance_checks:
+            contract_fields["acceptance_checks"] = list(acceptance_checks)
+        if contract_fields and "constraints" in framework_cls.model_fields:
+            framework: ReasoningFramework = framework_cls(**contract_fields)
+        else:
+            framework = framework_cls()
         
         # Generate the prompt
         meta_prompt = framework.generate_prompt_template(task, context)
@@ -69,6 +87,9 @@ class PromptBuilder:
         analysis: TaskAnalysis,
         context: str = "",
         override_framework: Optional[str] = None,
+        constraints: str = "",
+        requested_artifact: str = "",
+        acceptance_checks: Optional[list[str]] = None,
     ) -> GeneratedPrompt:
         """
         Build a meta-prompt using an existing analysis.
@@ -77,6 +98,9 @@ class PromptBuilder:
             analysis: Pre-computed task analysis
             context: Additional context
             override_framework: Use this framework instead of the recommended one
+            constraints: Optional constraints supplied by the caller
+            requested_artifact: Optional description of the requested artifact
+            acceptance_checks: Optional acceptance checks supplied by the caller
         
         Returns:
             GeneratedPrompt with the assembled meta-prompt
@@ -86,6 +110,9 @@ class PromptBuilder:
             context=context,
             framework_name=override_framework,
             analysis=analysis,
+            constraints=constraints,
+            requested_artifact=requested_artifact,
+            acceptance_checks=acceptance_checks,
         )
     
     def build_custom(
@@ -93,6 +120,9 @@ class PromptBuilder:
         task: str,
         framework_name: str,
         context: str = "",
+        constraints: str = "",
+        requested_artifact: str = "",
+        acceptance_checks: Optional[list[str]] = None,
     ) -> GeneratedPrompt:
         """
         Build a meta-prompt with an explicitly specified framework.
@@ -101,6 +131,9 @@ class PromptBuilder:
             task: The task to create a prompt for
             framework_name: Name of the framework to use
             context: Additional context
+            constraints: Optional constraints supplied by the caller
+            requested_artifact: Optional description of the requested artifact
+            acceptance_checks: Optional acceptance checks supplied by the caller
         
         Returns:
             GeneratedPrompt with the assembled meta-prompt
@@ -110,6 +143,9 @@ class PromptBuilder:
             context=context,
             framework_name=framework_name,
             analysis=None,
+            constraints=constraints,
+            requested_artifact=requested_artifact,
+            acceptance_checks=acceptance_checks,
         )
     
     @staticmethod

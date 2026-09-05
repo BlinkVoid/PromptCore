@@ -13,6 +13,7 @@ Submodules:
 - self_criticism: Reflexion, Maieutic, CoVe, Self-Refine, Self-Cal, RCoT, Cumulative
 - advanced: ReAct, GoT, RAP, CoD, BoT, CoTable
 - modern: Self-Discover, Chain of Draft, CRITIC, Chain of Code, RE2, CoA, DTG
+- plain: Plain task contract (explicit neutral baseline)
 """
 
 # Base classes and registry
@@ -99,6 +100,10 @@ from .modern import (
     DeliberateThenGenerate,
 )
 
+# Plain baseline (imported last so it registers after every reasoning
+# framework; it is intended for explicit selection only).
+from .plain import PlainContract
+
 __all__ = [
     # Base
     "TaskCategory",
@@ -160,4 +165,6 @@ __all__ = [
     "Re2ReReading",
     "ChainOfAbstraction",
     "DeliberateThenGenerate",
+    # Plain baseline
+    "PlainContract",
 ]
